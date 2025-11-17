@@ -42,8 +42,8 @@ export default function Docs() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
-      <aside className="hidden lg:block w-80 h-screen fixed left-0 top-0 overflow-y-auto bg-white/50 dark:bg-gray-800/50 backdrop-blur-md border-r border-gray-200 dark:border-gray-700 p-6 pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col lg:flex-row">
+      <aside className="hidden lg:block w-80 h-screen sticky top-0 overflow-y-auto bg-white/50 dark:bg-gray-800/50 backdrop-blur-md border-r border-gray-200 dark:border-gray-700 p-6 pt-6">
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Documentation</h3>
           <nav className="space-y-1">
@@ -100,7 +100,7 @@ export default function Docs() {
         </div>
       </aside>
 
-      <main className="flex-1 lg:ml-80">
+      <main className="flex-1 w-full lg:w-auto">
         <section className="py-12 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Documentation</h1>

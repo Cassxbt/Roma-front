@@ -485,18 +485,18 @@ export default function Translate() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-between">
-            <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex gap-3 w-full sm:w-auto">
               <button
                 onClick={clearAll}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium"
+                className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium text-sm"
               >
                 Clear
               </button>
               <button
                 onClick={exportResults}
                 disabled={results.length === 0}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Export
               </button>
@@ -505,7 +505,7 @@ export default function Translate() {
             <button
               onClick={() => handleTranslate(false)}
               disabled={translating || !text.trim() || targetLangs.length === 0}
-              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="w-full sm:w-auto px-8 py-2.5 sm:py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
             >
               {translating ? (
                 <>
