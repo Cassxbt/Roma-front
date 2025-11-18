@@ -18,19 +18,21 @@ type TranslationResult = {
 };
 
 export default function RomaDemo() {
-    const [text, setText] = useState("Hello, world! This is Transent demonstrating the power of AI translation.");
-    const [sourceLang, setSourceLang] = useState("en");
-    const [targetLangs, setTargetLangs] = useState([
-        { code: "es", name: "Spanish", flag: "🇪🇸" },
-        { code: "fr", name: "French", flag: "🇫🇷" },
-        { code: "de", name: "German", flag: "🇩🇪" }
-    ] as Language[]);
-    const [showResults, setShowResults] = useState(false);
-    const [translating, setTranslating] = useState(false);
-    const [results, setResults] = useState([] as TranslationResult[]);
-    const [processingTime, setProcessingTime] = useState(0);
-    const [quality, setQuality] = useState(0);
-    const [activeStage, setActiveStage] = useState(0);
+  const [text, setText] = useState("Hello, world! This is Transent demonstrating the power of AI translation.");
+  const [sourceLang, setSourceLang] = useState("en");
+  const [targetLangs, setTargetLangs] = useState([
+    { code: "es", name: "Spanish", flag: "🇪🇸" },
+    { code: "fr", name: "French", flag: "🇫🇷" },
+    { code: "de", name: "German", flag: "🇩🇪" }
+  ] as Language[]);
+  const [showResults, setShowResults] = useState(false);
+  const [translating, setTranslating] = useState(false);
+  const [results, setResults] = useState([] as TranslationResult[]);
+  const [processingTime, setProcessingTime] = useState(0);
+  const [quality, setQuality] = useState(0);
+  const [activeStage, setActiveStage] = useState(0);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copiedAll, setCopiedAll] = useState(false);
 
     const availableLanguages: Language[] = [
         { code: "es", name: "Spanish", flag: "🇪🇸" },
@@ -174,21 +176,47 @@ export default function RomaDemo() {
 
                 {/* Translation Results */}
                 <div>
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                         <h2 className="text-2xl font-bold text-white">Translation Results</h2>
-                        <div className="flex gap-3">
-                            <button className="px-4 py-2 bg-blue-900 text-blue-300 rounded-lg border border-blue-700 flex items-center gap-2 hover:bg-blue-800 transition-colors">
+                        <div className="flex gap-3 w-full sm:w-auto">
+                            <motion.button 
+                                onClick={() => {
+                                    const allTranslations = results.map(r => `${r.name}: ${r.text}`).join('\n\n');
+                                    navigator.clipboard.writeText(allTranslations);
+                                    setCopiedAll(true);
+                                    setTimeout(() => setCopiedAll(false), 2000);
+                                }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className={`flex-1 sm:flex-none px-4 py-2 rounded-lg border flex items-center justify-center gap-2 transition-colors ${
+                                  copiedAll
+                                    ? 'bg-green-900 text-green-300 border-green-700'
+                                    : 'bg-blue-900 text-blue-300 border-blue-700 hover:bg-blue-800'
+                                }`}>
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedAll ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"} />
                                 </svg>
-                                Copy All
-                            </button>
-                            <button className="px-4 py-2 bg-green-900 text-green-300 rounded-lg border border-green-700 flex items-center gap-2 hover:bg-green-800 transition-colors">
+                                {copiedAll ? 'Copied!' : 'Copy All'}
+                            </motion.button>
+                            <motion.button 
+                                onClick={() => {
+                                    const exportText = results.map(r => `${r.name}: ${r.text}`).join('\n');
+                                    const blob = new Blob([exportText], { type: 'text/plain' });
+                                    const url = URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = `translations-${Date.now()}.txt`;
+                                    a.click();
+                                    URL.revokeObjectURL(url);
+                                }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="flex-1 sm:flex-none px-4 py-2 bg-green-900 text-green-300 rounded-lg border border-green-700 flex items-center justify-center gap-2 hover:bg-green-800 transition-colors">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 Export
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
 
@@ -214,12 +242,23 @@ export default function RomaDemo() {
                                 <p className="text-gray-300 mb-3">{result.text}</p>
                                 <div className="flex items-center justify-between text-xs">
                                     <span className="text-gray-500">Character count: {result.charCount}</span>
-                                    <button className="text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                                    <motion.button 
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(result.text);
+                                            setCopiedIndex(idx);
+                                            setTimeout(() => setCopiedIndex(null), 2000);
+                                        }}
+                                        whileHover={{ scale: 1.05 }}
+                                        className={`flex items-center gap-1 font-medium transition ${
+                                          copiedIndex === idx
+                                            ? 'text-green-400'
+                                            : 'text-blue-400 hover:text-blue-300'
+                                        }`}>
                                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copiedIndex === idx ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"} />
                                         </svg>
-                                        Copy
-                                    </button>
+                                        {copiedIndex === idx ? 'Copied!' : 'Copy'}
+                                    </motion.button>
                                 </div>
                             </motion.div>
                         ))}
