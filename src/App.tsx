@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes, Link, useLocation } from "react-router-dom";
 import { useTheme } from "./theme";
 import Home from "./pages/Home";
