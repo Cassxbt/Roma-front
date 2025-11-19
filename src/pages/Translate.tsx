@@ -274,11 +274,11 @@ export default function Translate() {
         )}
 
         {/* Main Translation Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
           {/* Language Selectors */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+          <div className="flex items-center gap-4 mb-6">
             {/* Source Language */}
-            <div className="relative flex-1 sm:flex-0 sm:flex-1">
+            <div className="relative flex-1">
               <button
                 onClick={() => setShowSourceDropdown(!showSourceDropdown)}
                 className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
@@ -325,27 +325,26 @@ export default function Translate() {
               }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="sm:p-3 p-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed self-center sm:self-auto"
+              className="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={targetLangs.length !== 1}
               title={targetLangs.length === 1 ? "Swap languages" : "Works with one target language"}
             >
-              <svg className="sm:w-5 sm:h-5 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
               </svg>
             </motion.button>
 
-            {/* Target Languages Container */}
-            <div className="flex-1 flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            {/* Target Languages */}
+            <div className="flex-1 flex items-center gap-2 flex-wrap">
               {targetLangs.map(lang => (
-                <div key={lang.code} className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg text-xs sm:text-sm flex-shrink-0">
-                  <span className="text-lg sm:text-xl">{lang.flag}</span>
-                  <span className="hidden sm:inline font-medium text-gray-900 dark:text-white">{lang.name}</span>
-                  <span className="sm:hidden font-medium text-gray-900 dark:text-white">{lang.code.toUpperCase()}</span>
+                <div key={lang.code} className="flex items-center gap-1 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <span className="text-xl">{lang.flag}</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{lang.name}</span>
                   <button
                     onClick={() => removeLanguage(lang.code)}
-                    className="ml-0.5 sm:ml-1 text-gray-500 hover:text-red-600 dark:hover:text-red-400 flex-shrink-0"
+                    className="ml-1 text-gray-500 hover:text-red-600 dark:hover:text-red-400"
                   >
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -355,30 +354,30 @@ export default function Translate() {
               {/* Add Language Button */}
               <button
                 onClick={() => setShowAddLanguage(!showAddLanguage)}
-                className="px-2 sm:px-3 py-1.5 sm:py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition text-xs sm:text-sm font-medium text-gray-900 dark:text-white flex-shrink-0"
+                className="px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
               >
-                + Add
+                <span className="text-sm font-medium text-gray-900 dark:text-white">+ Add</span>
               </button>
             </div>
           </div>
 
           {/* Add Language Dropdown */}
           {showAddLanguage && (
-           <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
-             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1.5 sm:gap-2">
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                 {availableLanguages.filter(l => !targetLangs.find(t => t.code === l.code)).map(lang => (
-                   <button
-                     key={lang.code}
-                     onClick={() => addLanguage(lang)}
-                     className="flex flex-col sm:flex-row items-center sm:items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 transition"
-                   >
-                     <span className="text-lg sm:text-xl">{lang.flag}</span>
-                     <span className="text-xs sm:text-sm text-gray-900 dark:text-white text-center sm:text-left">{lang.name}</span>
-                   </button>
-                 ))}
-                </div>
-                </div>
-                )}
+                  <button
+                    key={lang.code}
+                    onClick={() => addLanguage(lang)}
+                    className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-700 transition"
+                  >
+                    <span className="text-xl">{lang.flag}</span>
+                    <span className="text-sm text-gray-900 dark:text-white">{lang.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Text Input with Voice Recorder */}
           <div className="mb-6">
@@ -485,18 +484,18 @@ export default function Translate() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex gap-3 w-full sm:w-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex gap-3">
               <button
                 onClick={clearAll}
-                className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium text-sm"
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium"
               >
                 Clear
               </button>
               <button
                 onClick={exportResults}
                 disabled={results.length === 0}
-                className="flex-1 sm:flex-none px-4 py-2.5 sm:py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Export
               </button>
@@ -505,7 +504,7 @@ export default function Translate() {
             <button
               onClick={() => handleTranslate(false)}
               disabled={translating || !text.trim() || targetLangs.length === 0}
-              className="w-full sm:w-auto px-8 py-2.5 sm:py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {translating ? (
                 <>
