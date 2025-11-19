@@ -600,7 +600,8 @@ export default function Features() {
                             </a>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
         </div>
     );
 }

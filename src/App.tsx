@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Route, Routes, Link, useLocation } from "react-router-dom";
 import { useTheme } from "./theme";
 import Home from "./pages/Home";
@@ -9,7 +9,7 @@ import Docs from "./pages/Docs";
 function Navbar() {
     const [theme, toggle] = useTheme();
     const location = useLocation();
-    const [menuOpen, setMenuOpen] = React.useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const isActive = (path: string) => {
         return location.pathname === path;
