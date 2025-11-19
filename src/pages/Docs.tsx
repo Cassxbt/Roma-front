@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import Footer from "../components/Footer";
 
 type CodeBlockProps = {
   title: string;
@@ -198,7 +199,7 @@ export default function Docs() {
               <div>
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">Web Interface</h3>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 leading-relaxed">
-                  The Transent web application is available at <code className="bg-gray-900 px-1.5 py-0.5 rounded text-blue-400 text-xs">http://localhost:5000</code> and provides:
+                  The Transent web application is available at <a href="https://roma-bot.vercel.app" target="_blank" rel="noreferrer" className="bg-gray-900 px-1.5 py-0.5 rounded text-blue-400 text-xs hover:text-blue-300 transition-colors">roma-bot.vercel.app</a> and provides:
                 </p>
                 <ul className="list-disc list-inside text-xs sm:text-sm text-gray-600 dark:text-gray-300 space-y-1 sm:space-y-2 ml-2">
                   <li><strong>Text Translation:</strong> Translate text to multiple languages simultaneously</li>
@@ -271,6 +272,14 @@ export default function Docs() {
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-2 sm:mb-3">Translate text with natural language commands:</p>
                 <code className="text-xs sm:text-sm text-blue-600 dark:text-blue-400">!translate Hello world to Spanish French</code>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 sm:mt-3">Also supports voice channel transcription and translation for real-time conversation translation.</p>
+                <a
+                  href="https://discord.com/oauth2/authorize?client_id=1437098473915678822&permissions=277028662336&integration_type=1&scope=bot+applications.commands"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block mt-3 sm:mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors"
+                >
+                  Add Bot to Discord
+                </a>
               </div>
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">Telegram Bot</h3>
@@ -299,6 +308,7 @@ export default function Docs() {
           </section>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
